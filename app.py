@@ -66,7 +66,7 @@ def plot_state_data(dataname, data):
     p.title.text = f'{dataname} in {YEAR_TO_PLOT}'.replace('_', ' ').title()
     # color_bar = ColorBar(color_mapper=color_mapper, ticker=LogTicker(),
     #                      label_standoff=12, border_line_color=None, location=(0,0))
-    p.add_layout(color_bar, 'right')
+    # p.add_layout(color_bar, 'right')
 
     return p, patches
 
@@ -110,9 +110,52 @@ def gen_fake_rows():
                 'solar_installed': random.random() * 100000,
                 'county': county['name']
             }
+
+
+
+def estimate_intalls(df):
+    years = np.array(sorted(set(df['year'])))
+    def gen():
+        for county, county_df in df[['year', 'energy', 'county', 'energy_use']].groupby('county'):
+            county_df = county_df.dropna()
+            x = np.array([*county_df['year']])
+            x = np.array([[xx-years[0], 1] for xx in x])
+            y = np.array([*county_df['energy']])
+
+            if len(y) > 2:
+                (a,b), *_ = np.linalg.lstsq(x, y)
+            else:
+                a,b = 0, 0
+            print(county)
+            print(a,b)
+            estimated_energy_installed = np.array([max(v, 0) for v in ((years-years[0]) * a + b)])
+            print(estimated_energy_installed)
+            esimtimated_total_energy = np.cumsum(estimated_energy_installed)
+            energy_use = np.array([*df.loc[df['county'] == county, 'energy_use']])
+            frac_solar_power = esimtimated_total_energy/energy_use
+            # print(esimtimated_total_energy)
+            for year, install, tot_install, non_sololar_pow in zip(years, estimated_energy_installed, esimtimated_total_energy, frac_solar_power):
+                print(county, year, install, tot_install)
+                yield {'year': year, 'power_installed': install, 'total_power_installed': tot_install, 'county': county, 'solar_power_fraction': non_sololar_pow}
+
+    new_df = pd.DataFrame.from_dict(list(gen()))
+    return do_merge(df, new_df)
+
+def do_merge(A, B):
+    return A.merge(B, on=['year', 'county'], how='outer').sort_values(by=['year'])
+
+
+def merge_datafames(*args):
+    args = list(args)
+    A = args.pop()
+    while args:
+        A = do_merge(A, args.pop())
+    return A
+
 # df = pd.DataFrame.from_dict(list(gen_fake_rows()))
 A, B = [pd.read_csv('data/estimate_install_production.csv'), pd.read_csv('data/EnergyConsumption.csv')]
-df = A.merge(B, on=['year', 'county'], how='outer').sort_values(by=['year'])
+df = do_merge(A, B)#A.merge(B, on=['year', 'county'], how='outer').sort_values(by=['year'])
+df = estimate_intalls(df)
 # df = rename_columns(df)
 
 # import ipdb; ipdb.set_trace()
@@ -135,6 +178,7 @@ def update_data():
     (county, x, y) = make_county_plot_data(COL_TO_PLOT, df, COUNTY_TO_PLOT)
     county_plot.data_source.data = {'x': x, 'y': y}
     CO_county_fig.title.text = f'{COL_TO_PLOT} Over Time in {COUNTY_TO_PLOT}'.replace('_', ' ').title()
+
 
 # construct year dropdown
 def update_year_to_plot(atr, old, new):
