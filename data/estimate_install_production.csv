@@ -1,0 +1,449 @@
+county,year,energy
+Adams,1997,
+Adams,1999,
+Adams,2005,
+Adams,2006,
+Adams,2007,4830.08837890625
+Adams,2008,53214.25
+Adams,2009,72218.1484375
+Adams,2010,83010.8984375
+Adams,2011,366145.6875
+Adams,2012,2390485.75
+Adams,2013,
+Adams,2014,
+Adams,2015,
+Adams,2016,
+Alamosa,1997,
+Alamosa,1999,
+Alamosa,2005,
+Alamosa,2006,
+Alamosa,2007,15734799.0
+Alamosa,2008,1140868.625
+Alamosa,2009,1598364.625
+Alamosa,2010,
+Alamosa,2011,109109920.0
+Alamosa,2012,
+Alamosa,2013,
+Alamosa,2014,
+Alamosa,2015,
+Alamosa,2016,
+Arapahoe,1997,
+Arapahoe,1999,
+Arapahoe,2005,
+Arapahoe,2006,10611.0302734375
+Arapahoe,2007,
+Arapahoe,2008,114689.078125
+Arapahoe,2009,275237.125
+Arapahoe,2010,2522385.25
+Arapahoe,2011,1540873.25
+Arapahoe,2012,1990392.75
+Arapahoe,2013,68813.453125
+Arapahoe,2014,
+Arapahoe,2015,
+Arapahoe,2016,
+Boulder,1997,
+Boulder,1999,
+Boulder,2005,
+Boulder,2006,
+Boulder,2007,1716722.125
+Boulder,2008,1964632.875
+Boulder,2009,3458078.75
+Boulder,2010,231198.421875
+Boulder,2011,315117.65625
+Boulder,2012,1140978.5
+Boulder,2013,8160.43408203125
+Boulder,2014,
+Boulder,2015,
+Boulder,2016,
+Broomfield,1997,
+Broomfield,1999,
+Broomfield,2005,
+Broomfield,2006,
+Broomfield,2007,
+Broomfield,2008,207172.671875
+Broomfield,2009,55278.24609375
+Broomfield,2010,25590.546875
+Broomfield,2011,159813.9375
+Broomfield,2012,210270.53125
+Broomfield,2013,
+Broomfield,2014,
+Broomfield,2015,
+Broomfield,2016,
+Chaffee,1997,
+Chaffee,1999,
+Chaffee,2005,
+Chaffee,2006,
+Chaffee,2007,
+Chaffee,2008,12026.001953125
+Chaffee,2009,62668.8359375
+Chaffee,2010,
+Chaffee,2011,
+Chaffee,2012,
+Chaffee,2013,
+Chaffee,2014,
+Chaffee,2015,
+Chaffee,2016,
+Custer,1997,
+Custer,1999,
+Custer,2005,
+Custer,2006,
+Custer,2007,
+Custer,2008,
+Custer,2009,5358.9697265625
+Custer,2010,
+Custer,2011,
+Custer,2012,
+Custer,2013,
+Custer,2014,
+Custer,2015,
+Custer,2016,
+Delta,1997,
+Delta,1999,
+Delta,2005,
+Delta,2006,
+Delta,2007,
+Delta,2008,11463.947265625
+Delta,2009,16087.9130859375
+Delta,2010,
+Delta,2011,146082.4375
+Delta,2012,
+Delta,2013,20101.16796875
+Delta,2014,
+Delta,2015,
+Delta,2016,
+Denver,1997,
+Denver,1999,
+Denver,2005,
+Denver,2006,
+Denver,2007,4747.21484375
+Denver,2008,6526804.0
+Denver,2009,3460911.0
+Denver,2010,525375.125
+Denver,2011,8016130.5
+Denver,2012,734527.4375
+Denver,2013,74864.4140625
+Denver,2014,
+Denver,2015,
+Denver,2016,
+Douglas,1997,
+Douglas,1999,
+Douglas,2005,
+Douglas,2006,
+Douglas,2007,
+Douglas,2008,7879.60546875
+Douglas,2009,129463.7421875
+Douglas,2010,79604.0078125
+Douglas,2011,336407.53125
+Douglas,2012,1408367.0
+Douglas,2013,43446.11328125
+Douglas,2014,
+Douglas,2015,
+Douglas,2016,
+Eagle,1997,
+Eagle,1999,
+Eagle,2005,
+Eagle,2006,
+Eagle,2007,
+Eagle,2008,
+Eagle,2009,
+Eagle,2010,751.220703125
+Eagle,2011,
+Eagle,2012,15541.9228515625
+Eagle,2013,
+Eagle,2014,
+Eagle,2015,
+Eagle,2016,
+El Paso,1997,
+El Paso,1999,
+El Paso,2005,
+El Paso,2006,
+El Paso,2007,
+El Paso,2008,3497350.75
+El Paso,2009,69494.296875
+El Paso,2010,9538.2294921875
+El Paso,2011,10473460.0
+El Paso,2012,339851.25
+El Paso,2013,
+El Paso,2014,23413.58984375
+El Paso,2015,
+El Paso,2016,
+Fremont,1997,
+Fremont,1999,
+Fremont,2005,
+Fremont,2006,
+Fremont,2007,
+Fremont,2008,3096.791015625
+Fremont,2009,11319.1865234375
+Fremont,2010,
+Fremont,2011,
+Fremont,2012,
+Fremont,2013,
+Fremont,2014,
+Fremont,2015,
+Fremont,2016,
+Garfield,1997,16692.193359375
+Garfield,1999,
+Garfield,2005,
+Garfield,2006,
+Garfield,2007,
+Garfield,2008,1004703.125
+Garfield,2009,6842280.0
+Garfield,2010,
+Garfield,2011,1449233.0
+Garfield,2012,60976.578125
+Garfield,2013,
+Garfield,2014,
+Garfield,2015,
+Garfield,2016,
+Gilpin,1997,
+Gilpin,1999,
+Gilpin,2005,
+Gilpin,2006,
+Gilpin,2007,
+Gilpin,2008,
+Gilpin,2009,7661.564453125
+Gilpin,2010,
+Gilpin,2011,
+Gilpin,2012,
+Gilpin,2013,
+Gilpin,2014,
+Gilpin,2015,
+Gilpin,2016,
+Grand,1997,
+Grand,1999,
+Grand,2005,
+Grand,2006,
+Grand,2007,
+Grand,2008,
+Grand,2009,
+Grand,2010,5395.48828125
+Grand,2011,
+Grand,2012,
+Grand,2013,9159.0078125
+Grand,2014,
+Grand,2015,
+Grand,2016,
+Gunnison,1997,
+Gunnison,1999,
+Gunnison,2005,
+Gunnison,2006,
+Gunnison,2007,
+Gunnison,2008,
+Gunnison,2009,9020.8056640625
+Gunnison,2010,
+Gunnison,2011,
+Gunnison,2012,
+Gunnison,2013,
+Gunnison,2014,
+Gunnison,2015,
+Gunnison,2016,
+Jefferson,1997,27250.888671875
+Jefferson,1999,
+Jefferson,2005,16657.021484375
+Jefferson,2006,
+Jefferson,2007,26303.103515625
+Jefferson,2008,4604417.0
+Jefferson,2009,862117.4375
+Jefferson,2010,3856916.5
+Jefferson,2011,5331188.0
+Jefferson,2012,4841171.5
+Jefferson,2013,108387.234375
+Jefferson,2014,390998.59375
+Jefferson,2015,
+Jefferson,2016,
+Lake,1997,
+Lake,1999,
+Lake,2005,
+Lake,2006,
+Lake,2007,
+Lake,2008,
+Lake,2009,
+Lake,2010,
+Lake,2011,
+Lake,2012,193957.640625
+Lake,2013,
+Lake,2014,
+Lake,2015,
+Lake,2016,5510.16015625
+Larimer,1997,
+Larimer,1999,2663.648193359375
+Larimer,2005,
+Larimer,2006,
+Larimer,2007,
+Larimer,2008,27337.353515625
+Larimer,2009,192080.671875
+Larimer,2010,17994476.0
+Larimer,2011,19902.447265625
+Larimer,2012,220816.4375
+Larimer,2013,35959.25390625
+Larimer,2014,166411.421875
+Larimer,2015,1838499.875
+Larimer,2016,
+Mesa,1997,
+Mesa,1999,
+Mesa,2005,
+Mesa,2006,
+Mesa,2007,68875.7734375
+Mesa,2008,42166.34765625
+Mesa,2009,
+Mesa,2010,
+Mesa,2011,462434.1875
+Mesa,2012,1645647.75
+Mesa,2013,546165.0
+Mesa,2014,
+Mesa,2015,
+Mesa,2016,
+Montrose,1997,
+Montrose,1999,
+Montrose,2005,
+Montrose,2006,
+Montrose,2007,
+Montrose,2008,46533.84765625
+Montrose,2009,18850.921875
+Montrose,2010,
+Montrose,2011,
+Montrose,2012,1961892.125
+Montrose,2013,10053.8251953125
+Montrose,2014,
+Montrose,2015,
+Montrose,2016,
+Ouray,1997,
+Ouray,1999,
+Ouray,2005,
+Ouray,2006,
+Ouray,2007,
+Ouray,2008,13574.0849609375
+Ouray,2009,50472.8984375
+Ouray,2010,
+Ouray,2011,
+Ouray,2012,
+Ouray,2013,
+Ouray,2014,
+Ouray,2015,
+Ouray,2016,
+Park,1997,
+Park,1999,
+Park,2005,
+Park,2006,
+Park,2007,
+Park,2008,
+Park,2009,
+Park,2010,
+Park,2011,
+Park,2012,16846.021484375
+Park,2013,
+Park,2014,
+Park,2015,
+Park,2016,
+Pueblo,1997,
+Pueblo,1999,
+Pueblo,2005,
+Pueblo,2006,
+Pueblo,2007,11083.013671875
+Pueblo,2008,
+Pueblo,2009,1787582.875
+Pueblo,2010,
+Pueblo,2011,
+Pueblo,2012,24454.1328125
+Pueblo,2013,13728.6357421875
+Pueblo,2014,
+Pueblo,2015,
+Pueblo,2016,
+Rio Blanco,1997,
+Rio Blanco,1999,
+Rio Blanco,2005,
+Rio Blanco,2006,
+Rio Blanco,2007,
+Rio Blanco,2008,
+Rio Blanco,2009,8784.498046875
+Rio Blanco,2010,
+Rio Blanco,2011,
+Rio Blanco,2012,
+Rio Blanco,2013,
+Rio Blanco,2014,
+Rio Blanco,2015,
+Rio Blanco,2016,
+Rio Grande,1997,
+Rio Grande,1999,
+Rio Grande,2005,
+Rio Grande,2006,
+Rio Grande,2007,
+Rio Grande,2008,5206.58349609375
+Rio Grande,2009,
+Rio Grande,2010,
+Rio Grande,2011,
+Rio Grande,2012,
+Rio Grande,2013,
+Rio Grande,2014,
+Rio Grande,2015,
+Rio Grande,2016,
+Routt,1997,
+Routt,1999,
+Routt,2005,
+Routt,2006,
+Routt,2007,
+Routt,2008,
+Routt,2009,18405.5234375
+Routt,2010,
+Routt,2011,
+Routt,2012,
+Routt,2013,
+Routt,2014,
+Routt,2015,
+Routt,2016,
+Saguache,1997,
+Saguache,1999,
+Saguache,2005,
+Saguache,2006,
+Saguache,2007,
+Saguache,2008,11426.658203125
+Saguache,2009,42345.62890625
+Saguache,2010,
+Saguache,2011,
+Saguache,2012,
+Saguache,2013,
+Saguache,2014,
+Saguache,2015,
+Saguache,2016,
+San Miguel,1997,
+San Miguel,1999,
+San Miguel,2005,
+San Miguel,2006,
+San Miguel,2007,
+San Miguel,2008,
+San Miguel,2009,34708.30859375
+San Miguel,2010,
+San Miguel,2011,
+San Miguel,2012,
+San Miguel,2013,
+San Miguel,2014,
+San Miguel,2015,
+San Miguel,2016,
+Summit,1997,
+Summit,1999,
+Summit,2005,
+Summit,2006,
+Summit,2007,
+Summit,2008,7177.50341796875
+Summit,2009,3505.2919921875
+Summit,2010,6009.072265625
+Summit,2011,788423.6875
+Summit,2012,15623.587890625
+Summit,2013,659595.875
+Summit,2014,
+Summit,2015,
+Summit,2016,
+Weld,1997,
+Weld,1999,
+Weld,2005,
+Weld,2006,
+Weld,2007,
+Weld,2008,8991.3427734375
+Weld,2009,135412.9375
+Weld,2010,32085.7734375
+Weld,2011,390782.09375
+Weld,2012,1133999.75
+Weld,2013,
+Weld,2014,
+Weld,2015,
+Weld,2016,
