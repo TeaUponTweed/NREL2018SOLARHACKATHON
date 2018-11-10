@@ -8,11 +8,11 @@ from bokeh.models import Button
 from bokeh.palettes import RdYlBu3
 from bokeh.plotting import figure, curdoc
 
-from bokeh.models import LogColorMapper
-from bokeh.palettes import Viridis6 as palette
+from bokeh.models import LogColorMapper, LogTicker, ColorBar
+from bokeh.palettes import Magma256 as palette
 from bokeh.palettes import Spectral4
 from bokeh.layouts import widgetbox
-from bokeh.models.widgets import Dropdown, Select
+from bokeh.models.widgets import Dropdown, Select, Slider
 
 
 YEAR_TO_PLOT='2010'
@@ -44,8 +44,6 @@ def make_state_data(df, counties, year, col):
     })
 
 def plot_state_data(dataname, data):
-    palette.reverse()
-
     color_mapper = LogColorMapper(palette=palette)
 
 
@@ -66,8 +64,18 @@ def plot_state_data(dataname, data):
               fill_color={'field': 'value', 'transform': color_mapper},
               fill_alpha=0.7, line_color="white", line_width=0.5)
     p.title.text = f'{dataname} in {YEAR_TO_PLOT}'.replace('_', ' ').title()
+    # color_bar = ColorBar(color_mapper=color_mapper, ticker=LogTicker(),
+    #                      label_standoff=12, border_line_color=None, location=(0,0))
+    p.add_layout(color_bar, 'right')
 
     return p, patches
+
+def rename_columns(df):
+    df['PV Capacity Installed, KWHr'] = df['energy']
+    # df = df.drop('energy', axis=1)
+    df = df['Energy Ussed, KWHr'] = df['energy_use']
+    # df = df.drop('energy_use', axis=1)
+    return df
 
 def make_county_plot_data(dataname, data, county):
 
@@ -85,34 +93,6 @@ def plot_county_data(dataname, data, county):
     plot = p.line(x, y, line_width=2, alpha=0.8)
     return p, plot
 
-# create a plot and style its properties
-p = figure(x_range=(0, 100), y_range=(0, 100), toolbar_location=None)
-p.border_fill_color = 'black'
-p.background_fill_color = 'black'
-p.outline_line_color = None
-p.grid.grid_line_color = None
-
-# add a text renderer to our plot (no data yet)
-r = p.text(x=[], y=[], text=[], text_color=[], text_font_size="20pt",
-           text_baseline="middle", text_align="center")
-
-i = 0
-
-ds = r.data_source
-
-# create a callback that will add a number in a random location
-def callback():
-    global i
-
-    # BEST PRACTICE --- update .data in one step with a new dict
-    new_data = dict()
-    new_data['x'] = ds.data['x'] + [random()*70 + 15]
-    new_data['y'] = ds.data['y'] + [random()*70 + 15]
-    new_data['text_color'] = ds.data['text_color'] + [RdYlBu3[i%3]]
-    new_data['text'] = ds.data['text'] + [str(i)]
-    ds.data = new_data
-
-    i = i + 1
 
 from bokeh.sampledata.us_counties import data as counties
 
@@ -131,7 +111,11 @@ def gen_fake_rows():
                 'county': county['name']
             }
 # df = pd.DataFrame.from_dict(list(gen_fake_rows()))
-df = pd.read_csv('data/estimate_install_production.csv')
+A, B = [pd.read_csv('data/estimate_install_production.csv'), pd.read_csv('data/EnergyConsumption.csv')]
+df = A.merge(B, on=['year', 'county'], how='outer').sort_values(by=['year'])
+# df = rename_columns(df)
+
+# import ipdb; ipdb.set_trace()
 
 CO_data = make_state_data(df, counties, YEAR_TO_PLOT, COL_TO_PLOT)
 (CO_plot_fig, CO_plot_patches) = plot_state_data(COL_TO_PLOT, CO_data)
@@ -143,6 +127,11 @@ def update_data():
     # CO_data[COL_TO_PLOT] = new_data[COL_TO_PLOT]
     CO_plot_fig.title.text = f'{COL_TO_PLOT} in {YEAR_TO_PLOT}'.replace('_', ' ').title()
     CO_plot_patches.data_source.data = new_data
+    # color_mapper = LogColorMapper(palette=palette, low=min(new_data['value']), high=max(new_data['value']))
+    cm = CO_plot_fig.select_one(LogColorMapper)
+    # cm.update(low=min(new_data['value']), high=max(new_data['value']))
+    cm.update(high=max(new_data['value']))
+
     (county, x, y) = make_county_plot_data(COL_TO_PLOT, df, COUNTY_TO_PLOT)
     county_plot.data_source.data = {'x': x, 'y': y}
     CO_county_fig.title.text = f'{COL_TO_PLOT} Over Time in {COUNTY_TO_PLOT}'.replace('_', ' ').title()
@@ -153,10 +142,10 @@ def update_year_to_plot(atr, old, new):
     YEAR_TO_PLOT = new
     update_data()
 
-year_menu = sorted(set(((str(y), str(y)) for y in df['year'])))
-year_dropdown = Select(title="Year:", options=year_menu, value=YEAR_TO_PLOT)
-year_dropdown.on_change('value', update_year_to_plot)
-
+years = sorted(set(y for y in df['year']))
+year_slider = Slider(start=years[0], end=years[-1], value=years[0], step=1,
+                     title="Year")
+year_slider.on_change('value', update_year_to_plot)
 # construct counrt dropdown
 def update_county_to_plot(atr, old, new):
     global COUNTY_TO_PLOT
@@ -176,4 +165,4 @@ col_data_menu = [(str(c), str(c)) for c in df.columns if c not in ['year','count
 col_dropdown = Select(title="Data:", options=col_data_menu, value=COL_TO_PLOT)
 col_dropdown.on_change('value', update_col_to_plot)
 
-curdoc().add_root(column(year_dropdown, col_dropdown, CO_plot_fig, county_dropdown, CO_county_fig))
+curdoc().add_root(column(year_slider, col_dropdown, CO_plot_fig, county_dropdown, CO_county_fig))
