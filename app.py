@@ -15,8 +15,8 @@ from bokeh.layouts import widgetbox
 from bokeh.models.widgets import Dropdown, Select
 
 
-YEAR_TO_PLOT='2000'
-COL_TO_PLOT='total_population'
+YEAR_TO_PLOT='2010'
+COL_TO_PLOT='energy'
 COUNTY_TO_PLOT='Denver'
 
 def make_state_data(df, counties, year, col):
@@ -40,7 +40,7 @@ def make_state_data(df, counties, year, col):
         'y':county_ys,
         'name':county_names,
         # col:[data_dict[county_id] for county_id in counties],
-        'value':[data_dict[county_id] for county_id in counties],
+        'value':[data_dict[county_id] if county_id in data_dict else float('NaN') for county_id in counties],
     })
 
 def plot_state_data(dataname, data):
@@ -130,7 +130,8 @@ def gen_fake_rows():
                 'solar_installed': random.random() * 100000,
                 'county': county['name']
             }
-df = pd.DataFrame.from_dict(list(gen_fake_rows()))
+# df = pd.DataFrame.from_dict(list(gen_fake_rows()))
+df = pd.read_csv('data/estimate_install_production.csv')
 
 CO_data = make_state_data(df, counties, YEAR_TO_PLOT, COL_TO_PLOT)
 (CO_plot_fig, CO_plot_patches) = plot_state_data(COL_TO_PLOT, CO_data)
