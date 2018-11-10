@@ -10,10 +10,14 @@ from bokeh.plotting import figure, curdoc
 
 from bokeh.models import LogColorMapper
 from bokeh.palettes import Viridis6 as palette
-
+from bokeh.palettes import Spectral4
 from bokeh.layouts import widgetbox
 from bokeh.models.widgets import Dropdown, Select
 
+
+YEAR_TO_PLOT='2000'
+COL_TO_PLOT='total_population'
+COUNTY_TO_PLOT='Denver'
 
 def make_state_data(df, counties, year, col):
     county_name_to_id = {county['name']: county_id for county_id, county in counties.items()}
@@ -51,6 +55,7 @@ def plot_state_data(dataname, data):
         tools=TOOLS,
         x_axis_location=None, y_axis_location=None,
         match_aspect=True,
+        plot_width=800, plot_height=350,
         tooltips=[
             ("Name", "@name"), ('value', "@value"), ("(Long, Lat)", "($x, $y)")
     ])
@@ -60,7 +65,25 @@ def plot_state_data(dataname, data):
     patches = p.patches('x', 'y', source=data,
               fill_color={'field': 'value', 'transform': color_mapper},
               fill_alpha=0.7, line_color="white", line_width=0.5)
+    p.title.text = f'{dataname} in {YEAR_TO_PLOT}'.replace('_', ' ').title()
+
     return p, patches
+
+def make_county_plot_data(dataname, data, county):
+
+    for (c, df) in data.groupby('county'):
+        if c == county:
+            return (county, df['year'], df[dataname])
+
+
+
+def plot_county_data(dataname, data, county):
+    p = figure(plot_width=800, plot_height=250)
+    # plots = {}
+    p.title.text = f'{dataname} Over Time In {COUNTY_TO_PLOT}'.replace('_', ' ').title()
+    (_, x, y) = make_county_plot_data(dataname, data, county)
+    plot = p.line(x, y, line_width=2, alpha=0.8)
+    return p, plot
 
 # create a plot and style its properties
 p = figure(x_range=(0, 100), y_range=(0, 100), toolbar_location=None)
@@ -109,18 +132,19 @@ def gen_fake_rows():
             }
 df = pd.DataFrame.from_dict(list(gen_fake_rows()))
 
-YEAR_TO_PLOT='2000'
-COL_TO_PLOT='total_population'
 CO_data = make_state_data(df, counties, YEAR_TO_PLOT, COL_TO_PLOT)
 (CO_plot_fig, CO_plot_patches) = plot_state_data(COL_TO_PLOT, CO_data)
-CO_ds = CO_plot_patches.data_source
+(CO_county_fig, county_plot) = plot_county_data(COL_TO_PLOT, df, COUNTY_TO_PLOT)
 
 def update_data():
-    print('updating data', YEAR_TO_PLOT, COL_TO_PLOT)
+    print('Updating plots:', YEAR_TO_PLOT, COL_TO_PLOT, COUNTY_TO_PLOT)
     new_data = make_state_data(df, counties, YEAR_TO_PLOT, COL_TO_PLOT)
     # CO_data[COL_TO_PLOT] = new_data[COL_TO_PLOT]
-    CO_ds.data = new_data
-
+    CO_plot_fig.title.text = f'{COL_TO_PLOT} in {YEAR_TO_PLOT}'.replace('_', ' ').title()
+    CO_plot_patches.data_source.data = new_data
+    (county, x, y) = make_county_plot_data(COL_TO_PLOT, df, COUNTY_TO_PLOT)
+    county_plot.data_source.data = {'x': x, 'y': y}
+    CO_county_fig.title.text = f'{COL_TO_PLOT} Over Time in {COUNTY_TO_PLOT}'.replace('_', ' ').title()
 
 # construct year dropdown
 def update_year_to_plot(atr, old, new):
@@ -132,6 +156,16 @@ year_menu = sorted(set(((str(y), str(y)) for y in df['year'])))
 year_dropdown = Select(title="Year:", options=year_menu, value=YEAR_TO_PLOT)
 year_dropdown.on_change('value', update_year_to_plot)
 
+# construct counrt dropdown
+def update_county_to_plot(atr, old, new):
+    global COUNTY_TO_PLOT
+    COUNTY_TO_PLOT = new
+    update_data()
+
+county_menu = sorted(set(((str(y), str(y)) for y in df['county'])))
+county_dropdown = Select(title="County:", options=county_menu, value=COUNTY_TO_PLOT)
+county_dropdown.on_change('value', update_county_to_plot)
+
 # construct column dropdown
 def update_col_to_plot(atr, old, new):
     global COL_TO_PLOT
@@ -141,4 +175,4 @@ col_data_menu = [(str(c), str(c)) for c in df.columns if c not in ['year','count
 col_dropdown = Select(title="Data:", options=col_data_menu, value=COL_TO_PLOT)
 col_dropdown.on_change('value', update_col_to_plot)
 
-curdoc().add_root(column(year_dropdown, col_dropdown, CO_plot_fig))
+curdoc().add_root(column(year_dropdown, col_dropdown, CO_plot_fig, county_dropdown, CO_county_fig))
