@@ -12,7 +12,7 @@ from bokeh.models import LogColorMapper
 from bokeh.palettes import Viridis6 as palette
 
 from bokeh.layouts import widgetbox
-from bokeh.models.widgets import Dropdown
+from bokeh.models.widgets import Dropdown, Select
 
 
 def make_state_data(df, counties, year, col):
@@ -129,7 +129,7 @@ def update_year_to_plot(atr, old, new):
     update_data()
 
 year_menu = sorted(set(((str(y), str(y)) for y in df['year'])))
-year_dropdown = Dropdown(label="Year", button_type="warning", menu=year_menu, value=YEAR_TO_PLOT)
+year_dropdown = Select(title="Year:", options=year_menu, value=YEAR_TO_PLOT)
 year_dropdown.on_change('value', update_year_to_plot)
 
 # construct column dropdown
@@ -138,7 +138,7 @@ def update_col_to_plot(atr, old, new):
     COL_TO_PLOT = new
     update_data()
 col_data_menu = [(str(c), str(c)) for c in df.columns if c not in ['year','county']]
-col_dropdown = Dropdown(label="Data", button_type="warning", menu=col_data_menu, value=COL_TO_PLOT)
+col_dropdown = Select(title="Data:", options=col_data_menu, value=COL_TO_PLOT)
 col_dropdown.on_change('value', update_col_to_plot)
 
 curdoc().add_root(column(year_dropdown, col_dropdown, CO_plot_fig))
