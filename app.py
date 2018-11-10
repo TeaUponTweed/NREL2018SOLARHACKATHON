@@ -16,6 +16,7 @@ from bokeh.models.widgets import Dropdown
 
 
 def make_state_data(df, counties, year, col):
+    county_name_to_id = {county['name']: county_id for county_id, county in counties.items()}
 
     county_xs = [county["lons"] for county in counties.values()]
     county_ys = [county["lats"] for county in counties.values()]
@@ -24,7 +25,8 @@ def make_state_data(df, counties, year, col):
     # data = df[df['year'] == year][['county_id', 'col']]
     data_dict = {}
     df = df[df['year'] == int(year)]
-    for county_id, data in zip(df['county_id'], df[col]):
+    for county, data in zip(df['county'], df[col]):
+        county_id = county_name_to_id[county]
         assert county_id not in data_dict, f'duplicate county data for county {county_id} in {year}'
         data_dict[county_id] = data
 
@@ -53,7 +55,7 @@ def plot_state_data(dataname, data):
             ("Name", "@name"), ('value', "@value"), ("(Long, Lat)", "($x, $y)")
     ])
     p.grid.grid_line_color = None
-    p.hover.point_policy = "mouse"
+    p.hover.point_policy = "follow_mouse"
 
     patches = p.patches('x', 'y', source=data,
               fill_color={'field': 'value', 'transform': color_mapper},
@@ -96,14 +98,14 @@ counties = {
 }
 def gen_fake_rows():
     for year in range(1990, 2031):
-        for county_id in counties:
+        for county in counties.values():
             yield {
                 'year': year,
                 'total_population': int(random.random() * 100000),
                 'energy_use': random.random() * 100000,
                 'energy_cost': random.random(),
                 'solar_installed': random.random() * 100000,
-                'county_id': county_id
+                'county': county['name']
             }
 df = pd.DataFrame.from_dict(list(gen_fake_rows()))
 
@@ -135,7 +137,7 @@ def update_col_to_plot(atr, old, new):
     global COL_TO_PLOT
     COL_TO_PLOT = new
     update_data()
-col_data_menu = [(str(c), str(c)) for c in df.columns if c not in ['year','county_id']]
+col_data_menu = [(str(c), str(c)) for c in df.columns if c not in ['year','county']]
 col_dropdown = Dropdown(label="Data", button_type="warning", menu=col_data_menu, value=COL_TO_PLOT)
 col_dropdown.on_change('value', update_col_to_plot)
 
